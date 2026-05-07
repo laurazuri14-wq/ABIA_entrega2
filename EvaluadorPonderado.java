@@ -8,7 +8,7 @@
  *
  * @author  ribadas
  */
-public abstract class EvaluadorPonderado {
+public  class EvaluadorPonderado extends Evaluador {
     /* Implementa la superclase del patron Estrategia para encapsular
      * las distintas funciones de evaluacion
      * 
@@ -22,6 +22,8 @@ public abstract class EvaluadorPonderado {
     public EvaluadorPonderado() {
     }
     
-    public abstract int valoracion(Tablero tablero, int jugador);
+    public  int valoracion(Tablero tablero, int jugador){
+        return tablero.contarCentro();
+    }
     
 }

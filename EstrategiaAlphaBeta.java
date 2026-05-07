@@ -28,17 +28,16 @@ public class EstrategiaAlphaBeta extends EstrategiaMiniMax {
 
         _jugadorMAX = jugador;
 
-        int alpha = _evaluador.MINIMO;
-        int betha = _evaluador.MAXIMO;
+        
 
         for (int col = 0; col < Tablero.NCOLUMNAS; col++) {
             if (movimientosPosibles[col]) {
                 nuevoTablero = (Tablero) tablero.clone();
                 nuevoTablero.anadirFicha(col, jugador);
                 nuevoTablero.obtenerGanador();
-
-                valorSucesor = ALFABETA(nuevoTablero,Jugador.alternarJugador(jugador),1,alpha,betha);
-
+                System.out.println("pieza"+col);
+                valorSucesor = ALFABETA(nuevoTablero,Jugador.alternarJugador(jugador),1,mejorValor,_evaluador.MAXIMO);
+                System.out.println(valorSucesor);
                 nuevoTablero = null;
 
                 if (valorSucesor >= mejorValor) {
@@ -46,7 +45,7 @@ public class EstrategiaAlphaBeta extends EstrategiaMiniMax {
                     mejorPosicion = col;
                 }
 
-                alpha = maximo2(alpha, mejorValor);
+                
             }
         }
 
@@ -83,9 +82,8 @@ public class EstrategiaAlphaBeta extends EstrategiaMiniMax {
     }
 
     private int ALFABETAMIN(Tablero tablero, int jugador, int capa, int alpha, int betha) {
-        int bethaactual = betha;
+        int bactual = betha;
         int vActual = _evaluador.MAXIMO;
-        int aux = 0;
 
         boolean movimientosPosibles[] = tablero.columnasLibres();
         Tablero nuevoTablero;
@@ -96,22 +94,21 @@ public class EstrategiaAlphaBeta extends EstrategiaMiniMax {
                 nuevoTablero.anadirFicha(col, jugador);
                 nuevoTablero.obtenerGanador();
 
-                aux = ALFABETA(nuevoTablero,Jugador.alternarJugador(jugador),capa + 1,alpha,bethaactual);
+                int aux = ALFABETA(nuevoTablero,Jugador.alternarJugador(jugador),capa + 1,alpha,bactual);
 
                 nuevoTablero = null;
+               vActual = minimo2(vActual,aux);
+                bactual = minimo2(bactual,vActual);
 
-                if (vActual > aux) {
-                    vActual = aux; // hacer minimo
-                }
-
-                if (bethaactual > vActual) {
-                    bethaactual = vActual;
-                }
+                
 
                 // Poda alfa-beta
-                if (alpha >= bethaactual) {
+                if (alpha >= bactual) {
+                    System.out.println("Minimocorte"+vActual);
                     return vActual;
                 }
+
+
             }
         }
 
@@ -119,9 +116,8 @@ public class EstrategiaAlphaBeta extends EstrategiaMiniMax {
     }
 
     private int ALFABETAMAX(Tablero tablero, int jugador, int capa, int alpha, int betha) {
-        int alphaactual = alpha;
+        int aActual = alpha;
         int vActual = _evaluador.MINIMO;
-        int aux = 0;
 
         boolean movimientosPosibles[] = tablero.columnasLibres();
         Tablero nuevoTablero;
@@ -132,20 +128,16 @@ public class EstrategiaAlphaBeta extends EstrategiaMiniMax {
                 nuevoTablero.anadirFicha(col, jugador);
                 nuevoTablero.obtenerGanador();
 
-                aux = ALFABETA(nuevoTablero,Jugador.alternarJugador(jugador),capa + 1,alphaactual,betha);
+                int aux = ALFABETA(nuevoTablero,Jugador.alternarJugador(jugador),capa + 1,aActual,betha);
 
                 nuevoTablero = null;
 
-                if (vActual < aux) {
-                    vActual = aux; // hacer maximo
-                }
-
-                if (alphaactual < vActual) {
-                    alphaactual = vActual;
-                }
+                vActual = maximo2(vActual,aux);
+                aActual = maximo2(aActual,vActual);
 
                 // Poda alfa-beta
-                if (betha <= alphaactual) {
+                if (betha <= aActual) {
+                    System.out.println(vActual);
                     return vActual;
                 }
             }

@@ -84,7 +84,20 @@ public class Tablero {
     * funciones consultarán la variable _ganador (en lugar de reevaluar
     * el tablero de nuevo cada vez )
     */
-    
+    public int contarCentro(){
+        int fila=0;
+        int piezas=0;
+        while(fila<NFILAS && _casillas[3][fila]!=VACIO)
+        {
+            if(_casillas[3][fila] == 1){
+                piezas++;
+            }
+            piezas--;
+            fila++;
+        }
+        return piezas;
+
+    }
     public void obtenerGanador() {
         int col, fila, jugador;
                 
