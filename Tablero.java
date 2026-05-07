@@ -84,12 +84,12 @@ public class Tablero {
     * funciones consultarán la variable _ganador (en lugar de reevaluar
     * el tablero de nuevo cada vez )
     */
-    public int contarCentro(){
+    public int contarCentro(int jugador){
         int fila=0;
         int piezas=0;
         while(fila<NFILAS && _casillas[3][fila]!=VACIO)
         {
-            if(_casillas[3][fila] == 1){
+            if(_casillas[3][fila] == jugador){
                 piezas++;
             }
             piezas--;
@@ -98,6 +98,7 @@ public class Tablero {
         return piezas;
 
     }
+
     public void obtenerGanador() {
         int col, fila, jugador;
                 
@@ -291,5 +292,123 @@ public class Tablero {
     public boolean esGanador(int jugador) {
         return(jugador == _ganador);
     }
+    public int contarLineas(int jugador, int longitud) {
+    int count = 0;
+
+    // Horizontal
+    for (int fila = 0; fila < NFILAS; fila++) {
+        for (int col = 0; col <= NCOLUMNAS - longitud; col++) {
+            int seguidas = 0;
+
+            for (int k = 0; k < longitud; k++) {
+                if (_casillas[col + k][fila] == jugador) {
+                    seguidas++;
+                } else if (_casillas[col + k][fila] != VACIO) {
+                    seguidas = -1;
+                    break;
+                }
+            }
+
+            if (seguidas == longitud) {
+                count++;
+            }
+        }
+    }
+
+    // Vertical
+    for (int col = 0; col < NCOLUMNAS; col++) {
+        for (int fila = 0; fila <= NFILAS - longitud; fila++) {
+            int seguidas = 0;
+
+            for (int k = 0; k < longitud; k++) {
+                if (_casillas[col][fila + k] == jugador) {
+                    seguidas++;
+                } else if (_casillas[col][fila + k] != VACIO) {
+                    seguidas = -1;
+                    break;
+                }
+            }
+
+            if (seguidas == longitud) {
+                count++;
+            }
+        }
+    }
+
+    // Diagonales decrecientes
+    for (int col = 0; col <= NCOLUMNAS - longitud; col++) {
+        for (int fila = 0; fila <= NFILAS - longitud; fila++) {
+            int seguidas = 0;
+
+            for (int k = 0; k < longitud; k++) {
+                if (_casillas[col + k][fila + k] == jugador) {
+                    seguidas++;
+                } else if (_casillas[col + k][fila + k] != VACIO) {
+                    seguidas = -1;
+                    break;
+                }
+            }
+
+            if (seguidas == longitud) {
+                count++;
+            }
+        }
+    }
+
+    // Diagonales crecientes
+    for (int col = 0; col <= NCOLUMNAS - longitud; col++) {
+        for (int fila = longitud - 1; fila < NFILAS; fila++) {
+            int seguidas = 0;
+
+            for (int k = 0; k < longitud; k++) {
+                if (_casillas[col + k][fila - k] == jugador) {
+                    seguidas++;
+                } else if (_casillas[col + k][fila - k] != VACIO) {
+                    seguidas = -1;
+                    break;
+                }
+            }
+
+            if (seguidas == longitud) {
+                count++;
+            }
+        }
+    }
+
+    return count;
+}
+
+// Rasgo: pares
+public int contarPares(int jugador) {
+    return contarLineas(jugador, 2);
+}
+
+// Rasgo: triples
+public int contarTriples(int jugador) {
+    return contarLineas(jugador, 3);
+}
+
+// Rasgo: amenazas dobles
+public int amenazasDobles(int jugador) {
+    int amenazas = 0;
+
+    for (int col = 0; col < NCOLUMNAS; col++) {
+        if (_posicionLibre[col] < NFILAS) {
+            Tablero copia = (Tablero) this.clone();
+
+            copia.anadirFicha(col, jugador);
+            copia.obtenerGanador();
+
+            if (copia.contarTriples(jugador) >= 2) {
+                amenazas++;
+            }
+        }
+    }
+
+    return amenazas;
+}
+
+
+
     
 }  // Fin clase Tablero

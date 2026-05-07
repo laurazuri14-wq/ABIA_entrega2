@@ -36,7 +36,7 @@ public class EstrategiaAlphaBeta extends EstrategiaMiniMax {
                 nuevoTablero.anadirFicha(col, jugador);
                 nuevoTablero.obtenerGanador();
                 System.out.println("pieza"+col);
-                valorSucesor = ALFABETA(nuevoTablero,Jugador.alternarJugador(jugador),1,mejorValor,_evaluador.MAXIMO);
+                valorSucesor = ALFABETA(nuevoTablero,Jugador.alternarJugador(jugador),1,_evaluador.MINIMO,_evaluador.MAXIMO);
                 System.out.println(valorSucesor);
                 nuevoTablero = null;
 
@@ -97,7 +97,7 @@ public class EstrategiaAlphaBeta extends EstrategiaMiniMax {
                 int aux = ALFABETA(nuevoTablero,Jugador.alternarJugador(jugador),capa + 1,alpha,bactual);
 
                 nuevoTablero = null;
-               vActual = minimo2(vActual,aux);
+                vActual = minimo2(vActual,aux);
                 bactual = minimo2(bactual,vActual);
 
                 
