@@ -16,28 +16,33 @@ public class OptimizarPesos {
     }
 
     public static PesosEvaluacion optimizar(PesosEvaluacion actuales) {
-        boolean mejora = true;
+    boolean mejora = true;
 
-        while (mejora) {
-            mejora = false;
+    while (mejora) {
+        mejora = false;
 
-            PesosEvaluacion[] candidatos = generarCandidatos(actuales);
-            PesosEvaluacion mejorCandidato = actuales;
+        PesosEvaluacion[] candidatos = generarCandidatos(actuales);
+        PesosEvaluacion mejorCandidato = actuales;
+        int mejorResultado = 0;
 
-            for (int i = 0; i < candidatos.length; i++) {
-                int resultado = enfrentar(candidatos[i], actuales);
+        int i = 0;
+        while (i < candidatos.length) {
+            int resultado = enfrentar(candidatos[i], actuales);
 
-                if (resultado > 0) {
-                    mejorCandidato = candidatos[i];
-                    mejora = true;
-                }
+            if (resultado > mejorResultado) {
+                mejorResultado = resultado;
+                mejorCandidato = candidatos[i];
+                mejora = true;
             }
 
-            actuales = mejorCandidato;
+            i++;
         }
 
-        return actuales;
+        actuales = mejorCandidato;
     }
+
+    return actuales;
+}
 
     public static PesosEvaluacion[] generarCandidatos(PesosEvaluacion p) {
         return new PesosEvaluacion[] {
