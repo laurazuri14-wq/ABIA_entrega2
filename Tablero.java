@@ -92,7 +92,7 @@ public class Tablero {
             if(_casillas[3][fila] == jugador){
                 piezas++;
             }
-            
+            piezas--;
             fila++;
         }
         return piezas;
@@ -171,7 +171,7 @@ public class Tablero {
     }
     
     public void anadirFicha(int columna, int jugador) {
-        if (_posicionLibre[columna] < NCOLUMNAS-1) {
+        if (_posicionLibre[columna] < NFILAS) {
             _casillas[columna][_posicionLibre[columna]] = jugador;
             _posicionLibre[columna]++;
         }

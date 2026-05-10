@@ -18,7 +18,8 @@ public class EstrategiaAlphaBeta extends EstrategiaMiniMax {
         // Primera capa del MINIMAX + seleccion jugada mas prometedora
         // capa 0 -> capa MAX -> maximiza
         // devuelve la columna con mayor evaluacion
-
+        nodosGenerados = 0;
+        long inicio = System.nanoTime();
         boolean movimientosPosibles[] = tablero.columnasLibres();
         Tablero nuevoTablero;
 
@@ -46,13 +47,13 @@ public class EstrategiaAlphaBeta extends EstrategiaMiniMax {
                 
             }
         }
-
+        tiempoUltimaBusquedaNs = System.nanoTime() - inicio;
         return mejorPosicion;
     }
 
     public int ALFABETA(Tablero tablero, int jugador, int capa, int alpha, int betha) {
         // Casos base
-
+        nodosGenerados++;
         if (tablero.hayEmpate()) {
             return 0;
         }

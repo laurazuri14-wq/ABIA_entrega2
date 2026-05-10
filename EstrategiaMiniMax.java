@@ -5,7 +5,17 @@ public class EstrategiaMiniMax extends Estrategia {
      * se establecen al crear el objeto o con las funciones
      * "establecerEvaluador()" y "establecerCapaMaxima()"
      */
-     
+
+    protected long nodosGenerados = 0;
+    protected long tiempoUltimaBusquedaNs = 0;
+
+    public long getNodosGenerados() {
+        return nodosGenerados;
+    }
+
+    public double getTiempoUltimaBusquedaMs() {
+        return tiempoUltimaBusquedaNs / 1_000_000.0;
+    }
     protected Evaluador _evaluador;
     protected int _capaMaxima;
 
@@ -31,6 +41,8 @@ public class EstrategiaMiniMax extends Estrategia {
 	// 
         //    capa O -> capa MAX -> maximiza
         //    devuelve la columna con mayor evaluacion
+        nodosGenerados = 0;
+        long inicio = System.nanoTime();
 	
         boolean movimientosPosibles[] = tablero.columnasLibres();
         Tablero nuevoTablero;
@@ -59,6 +71,7 @@ public class EstrategiaMiniMax extends Estrategia {
                 }
             }
         }
+        tiempoUltimaBusquedaNs = System.nanoTime() - inicio;
         return(mejorPosicion);        
     }
     
@@ -66,7 +79,8 @@ public class EstrategiaMiniMax extends Estrategia {
     public int MINIMAX(Tablero tablero, int jugador, int capa) {
         // Implementa la propagación de valores MINIMAX propiamente dicha
 	// a partir del segundo nivel (capa 1)
-       
+
+        nodosGenerados++;
         // Casos base
         if (tablero.hayEmpate()) {
             return(0);
