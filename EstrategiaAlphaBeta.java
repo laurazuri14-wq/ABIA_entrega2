@@ -35,9 +35,7 @@ public class EstrategiaAlphaBeta extends EstrategiaMiniMax {
                 nuevoTablero = (Tablero) tablero.clone();
                 nuevoTablero.anadirFicha(col, jugador);
                 nuevoTablero.obtenerGanador();
-                System.out.println("pieza"+col);
                 valorSucesor = ALFABETA(nuevoTablero,Jugador.alternarJugador(jugador),1,_evaluador.MINIMO,_evaluador.MAXIMO);
-                System.out.println(valorSucesor);
                 nuevoTablero = null;
 
                 if (valorSucesor >= mejorValor) {
@@ -104,7 +102,6 @@ public class EstrategiaAlphaBeta extends EstrategiaMiniMax {
 
                 // Poda alfa-beta
                 if (alpha >= bactual) {
-                    System.out.println("Minimocorte"+vActual);
                     return vActual;
                 }
 
@@ -137,7 +134,7 @@ public class EstrategiaAlphaBeta extends EstrategiaMiniMax {
 
                 // Poda alfa-beta
                 if (betha <= aActual) {
-                    System.out.println(vActual);
+                    
                     return vActual;
                 }
             }
