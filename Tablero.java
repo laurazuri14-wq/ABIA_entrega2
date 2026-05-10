@@ -92,7 +92,7 @@ public class Tablero {
             if(_casillas[3][fila] == jugador){
                 piezas++;
             }
-            piezas--;
+            
             fila++;
         }
         return piezas;
