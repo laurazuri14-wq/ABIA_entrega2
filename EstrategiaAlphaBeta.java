@@ -39,7 +39,7 @@ public class EstrategiaAlphaBeta extends EstrategiaMiniMax {
                 valorSucesor = ALFABETA(nuevoTablero,Jugador.alternarJugador(jugador),1,_evaluador.MINIMO,_evaluador.MAXIMO);
                 nuevoTablero = null;
 
-                if (valorSucesor >= mejorValor) {
+                if (valorSucesor > mejorValor) {
                     mejorValor = valorSucesor;
                     mejorPosicion = col;
                 }

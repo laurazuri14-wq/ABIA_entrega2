@@ -44,25 +44,34 @@ public class Experimentos {
         for (int i = 0; i < NUM_PARTIDAS; i++) {
             Resultado r;
 
-            if (i % 2 == 0) {
-                r = jugarPartida(estrategiaA, estrategiaB);
-                if (r.ganador == 1) victoriasA++;
-                else if (r.ganador == 2) victoriasB++;
-                else empates++;
-            } else {
-                r = jugarPartida(estrategiaB, estrategiaA);
-                if (r.ganador == 1) victoriasB++;
-                else if (r.ganador == 2) victoriasA++;
-                else empates++;
-            }
+        if (i % 2 == 0) {
+        r = jugarPartida(estrategiaA, estrategiaB);
 
-            nodosA += r.nodosA;
-            nodosB += r.nodosB;
-            tiempoA += r.tiempoA;
-            tiempoB += r.tiempoB;
-            movimientosA += r.movimientosA;
-            movimientosB += r.movimientosB;
-        }
+        if (r.ganador == 1) victoriasA++;
+        else if (r.ganador == 2) victoriasB++;
+        else empates++;
+
+        nodosA += r.nodosA;
+        nodosB += r.nodosB;
+        tiempoA += r.tiempoA;
+        tiempoB += r.tiempoB;
+        movimientosA += r.movimientosA;
+        movimientosB += r.movimientosB;
+
+    } else {
+        r = jugarPartida(estrategiaB, estrategiaA);
+
+        if (r.ganador == 1) victoriasB++;
+        else if (r.ganador == 2) victoriasA++;
+        else empates++;
+
+        nodosA += r.nodosB;
+        nodosB += r.nodosA;
+        tiempoA += r.tiempoB;
+        tiempoB += r.tiempoA;
+        movimientosA += r.movimientosB;
+        movimientosB += r.movimientosA;
+    }
 
         System.out.println(nombre);
         System.out.println("Victorias A: " + victoriasA * 100.0 / NUM_PARTIDAS + "%");

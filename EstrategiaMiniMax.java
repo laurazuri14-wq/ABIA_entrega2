@@ -65,7 +65,7 @@ public class EstrategiaMiniMax extends Estrategia {
                 nuevoTablero = null; // Ya no se necesita 
                 
                 // tomar mejor valor            
-                if (valorSucesor >= mejorValor) {
+                if (valorSucesor > mejorValor) {
                     mejorValor = valorSucesor;
                     mejorPosicion = col;
                 }
